@@ -4,8 +4,7 @@ import { combineReducers } from 'redux'
 export const PHOTOS_FETCHED = 'PHOTOS_FETCHED';
 
 // action creators
-export function fetchInfo () {
-  const info = ['TEST']
+export function infoFetched (info) {
   return {
     type: PHOTOS_FETCHED,
     info: info
@@ -14,7 +13,7 @@ export function fetchInfo () {
 
 // reducers
 
-const infoFetchedReducer = (state = {}, action) => {
+const infoFetchedReducer = (state = [], action) => {
     if (action.type === PHOTOS_FETCHED) {
         return action.info;
     }
