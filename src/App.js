@@ -3,10 +3,13 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { AppBar, Tab, Tabs, MuiThemeProvider, CssBaseline, createMuiTheme } from '@material-ui/core'
 import { Feedback, Photo } from '@material-ui/icons';
+import { Provider } from 'react-redux'
+import { createStore } from 'redux'
 
 import './App.css';
 import Thoughts from './components/Thoughts';
 import Photos from './components/Photos';
+import rootReducer from './components/reducers';
 
 
 let theme = {
@@ -20,6 +23,9 @@ let theme = {
     }
   },
 }
+
+const store = createStore(rootReducer)
+
 class App extends React.Component {
   state = {
     selectedTab: 0
@@ -31,23 +37,24 @@ class App extends React.Component {
 
   render () {
     const { selectedTab } = this.state
+
     return (
-      <div className="App">
-        <MuiThemeProvider theme={createMuiTheme(theme)} >
-          <Router>
-            <CssBaseline>
-              <AppBar position="static">
-                <Tabs value={selectedTab} onChange={this.handleChange}>
-                  <Tab label="Thoughts" icon={<Feedback />} component={Link} to={'/'} />
-                  <Tab label="Photos" icon={<Photo />} component={Link} to={'/photos'} />
-                </Tabs>
-              </AppBar>
-              <Route exact path="/" component={Thoughts} />
-              <Route exact path="/photos" component={Photos} />
-            </CssBaseline>
-          </Router>
-        </MuiThemeProvider>
-      </div>
+        <Provider store={store} className="App">
+          <MuiThemeProvider theme={createMuiTheme(theme)} >
+            <Router>
+              <CssBaseline>
+                <AppBar position="static">
+                  <Tabs value={selectedTab} onChange={this.handleChange}>
+                    <Tab label="Thoughts" icon={<Feedback />} component={Link} to={'/'} />
+                    <Tab label="Photos" icon={<Photo />} component={Link} to={'/photos'} />
+                  </Tabs>
+                </AppBar>
+                <Route exact path="/" component={Thoughts} />
+                <Route exact path="/photos" component={Photos} />
+              </CssBaseline>
+            </Router>
+          </MuiThemeProvider>
+        </Provider>
     );
   }
 }
