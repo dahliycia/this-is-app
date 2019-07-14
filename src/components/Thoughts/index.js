@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { Grid, Typography, Paper, withStyles } from '@material-ui/core';
 
